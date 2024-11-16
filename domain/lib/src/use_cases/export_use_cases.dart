@@ -1,4 +1,6 @@
-export 'logout_use_case.dart';
-export 'sign_in_use_case.dart';
-export 'sign_up_use_case.dart';
+export 'auth/logout_use_case.dart';
+export 'auth/sign_in_use_case.dart';
+export 'auth/sign_up_use_case.dart';
+export 'auth/get_logged_in_user_use_case.dart';
+export 'auth/set_logged_in_user_use_case.dart';
 export 'use_case.dart';

@@ -25,9 +25,13 @@ class AppRouter extends _$AppRouter {
           path: '/sign_in',
         ),
         AutoRoute(
-          initial: true,
           page: SignUpRoute.page,
           path: '/sign_up',
+        ),
+        AutoRoute(
+          initial: true,
+          page: SplashRoute.page,
+          path: '/splash',
         ),
       ];
 }

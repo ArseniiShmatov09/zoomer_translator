@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
-import '../repositories/auth_repository.dart';
-import '../use_cases/export_use_cases.dart';
+import 'package:domain/domain.dart';
 
 abstract class DomainDI {
   static void initDependencies(GetIt locator) {
@@ -8,19 +7,34 @@ abstract class DomainDI {
   }
 
   static void _initUseCases(GetIt locator) {
-    locator.registerLazySingleton<SignInUseCase>(
+    locator.registerFactory<SignInUseCase>(
       () => SignInUseCase(
         authRepository: locator<AuthRepository>(),
       ),
     );
-    locator.registerLazySingleton<SignUpUseCase>(
+
+    locator.registerFactory<SignUpUseCase>(
       () => SignUpUseCase(
         authRepository: locator<AuthRepository>(),
       ),
     );
-    locator.registerLazySingleton<LogoutUseCase>(
+
+    locator.registerFactory<LogoutUseCase>(
       () => LogoutUseCase(
         authRepository: locator<AuthRepository>(),
+        userSessionRepository: locator<UserSessionRepository>(),
+      ),
+    );
+
+    locator.registerFactory<GetLoggedInUserUseCase>(
+      () => GetLoggedInUserUseCase(
+        userSessionRepository: locator<UserSessionRepository>(),
+      ),
+    );
+
+    locator.registerFactory<SetLoggedInUserUseCase>(
+      () => SetLoggedInUserUseCase(
+        userSessionRepository: locator<UserSessionRepository>(),
       ),
     );
   }

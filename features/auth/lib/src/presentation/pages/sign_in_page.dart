@@ -33,6 +33,7 @@ class _SignInPageState extends State<SignInPage> {
       create: (BuildContext context) => AuthBloc(
         signInUseCase: appLocator<SignInUseCase>(),
         signUpUseCase: appLocator<SignUpUseCase>(),
+        setLoggedInUserUseCase: appLocator<SetLoggedInUserUseCase>(),
       ),
       child: Scaffold(
         appBar: AppBar(

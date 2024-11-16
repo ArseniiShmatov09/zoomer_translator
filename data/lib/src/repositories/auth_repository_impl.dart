@@ -12,11 +12,11 @@ class AuthRepositoryImpl implements AuthRepository{
     return _authProvider.logout();
   }
   @override
-  Future<void> signIn(UserAuthPayload userAuthPayload) {
+  Future<String> signIn(UserAuthPayload userAuthPayload) {
     return _authProvider.signIn(userAuthPayload);
   }
   @override
-  Future<void> signUp(UserAuthPayload userAuthPayload) {
+  Future<String> signUp(UserAuthPayload userAuthPayload) {
     return _authProvider.signUp(userAuthPayload);
   }
 }

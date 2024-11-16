@@ -1,6 +1,9 @@
 import 'package:core/core.dart';
+import 'package:data/src/repositories/auth_repository_impl.dart';
+import 'package:domain/domain.dart';
 
 import '../../data.dart';
+import '../providers/auth_provider_impl.dart';
 
 abstract class DataDI {
   static void initDependencies(GetIt locator) {
@@ -29,7 +32,17 @@ abstract class DataDI {
     );
   }
 
-  static void _initProviders(GetIt locator) {}
+  static void _initProviders(GetIt locator) {
+    locator.registerFactory<AuthProviderImpl>(
+      AuthProviderImpl.new,
+    );
+  }
 
-  static void _initRepositories(GetIt locator) {}
+  static void _initRepositories(GetIt locator) {
+    locator.registerFactory<AuthRepository>(
+      () => AuthRepositoryImpl(
+        authProvider: locator<AuthProviderImpl>(),
+      ),
+    );
+  }
 }

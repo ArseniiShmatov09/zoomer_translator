@@ -4,10 +4,15 @@ import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   _setupDI(Flavor.dev);
   runApp(const App());
@@ -37,14 +42,13 @@ class App extends StatelessWidget {
       fallbackLocale: AppLocalization.fallbackLocale,
       child: Builder(
         builder: (BuildContext context) {
-          return MaterialApp(
+          return MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            //routerConfig: appRouter.config(),
+            routerConfig: appRouter.config(),
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             theme: lightTheme,
-            home: const Scaffold(),
           );
         },
       ),

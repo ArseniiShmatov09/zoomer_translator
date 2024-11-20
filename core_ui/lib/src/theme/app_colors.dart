@@ -13,6 +13,8 @@ abstract class AppColors {
   Color get white;
 
   Color get black;
+
+  Color get red;
 }
 
 class DarkColors extends LightColors {
@@ -30,4 +32,7 @@ class LightColors implements AppColors {
 
   @override
   Color get black => const Color(0xFF000000);
+
+  @override
+  Color get red => const Color(0xFFF30000);
 }

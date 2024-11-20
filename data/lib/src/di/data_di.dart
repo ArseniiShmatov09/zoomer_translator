@@ -1,9 +1,12 @@
 import 'package:core/core.dart';
+import 'package:data/src/providers/ai_provider_impl.dart';
+import 'package:data/src/repositories/ai_repository_impl.dart';
 import 'package:data/src/repositories/auth_repository_impl.dart';
 import 'package:data/src/repositories/user_session_repository_impl.dart';
 import 'package:domain/domain.dart';
 
-import '../../data.dart';
+import '../errors/error_handler.dart';
+import '../providers/api_provider.dart';
 import '../providers/auth_provider_impl.dart';
 import '../providers/shared_preferences_provider.dart';
 
@@ -39,13 +42,16 @@ abstract class DataDI {
     locator.registerFactory<AuthProviderImpl>(
       AuthProviderImpl.new,
     );
+    locator.registerFactory<AIProviderImpl>(
+      AIProviderImpl.new,
+    );
   }
 
   static Future<void> _initSharedPreferences(GetIt locator) async {
     final SharedPreferencesProvider sharedPreferencesProvider =
-    await SharedPreferencesProvider.init();
+        await SharedPreferencesProvider.init();
     locator.registerLazySingleton<SharedPreferencesProvider>(
-          () => sharedPreferencesProvider,
+      () => sharedPreferencesProvider,
     );
   }
 
@@ -56,8 +62,14 @@ abstract class DataDI {
       ),
     );
 
+    locator.registerFactory<AIRepository>(
+      () => AIRepositoryImpl(
+        aiProvider: locator<AIProviderImpl>(),
+      ),
+    );
+
     locator.registerFactory<UserSessionRepository>(
-          () => UserSessionRepositoryImpl(
+      () => UserSessionRepositoryImpl(
         preferences: locator<SharedPreferencesProvider>(),
       ),
     );

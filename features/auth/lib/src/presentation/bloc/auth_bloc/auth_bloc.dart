@@ -18,16 +18,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _signUpUseCase = signUpUseCase,
         _setLoggedInUserUseCase = setLoggedInUserUseCase,
         super(
-          const AuthState(),
-        ) {
+        const AuthState(),
+      ) {
     on<SignInRequestedEvent>(_onSignInRequested);
     on<SignUpRequestedEvent>(_onSignUpRequested);
   }
 
   Future<void> _onSignInRequested(
-    SignInRequestedEvent event,
-    Emitter<AuthState> emit,
-  ) async {
+      SignInRequestedEvent event,
+      Emitter<AuthState> emit,
+      ) async {
     try {
       final UserAuthPayload userAuthPayload = UserAuthPayload(
         email: event.email,
@@ -53,9 +53,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignUpRequested(
-    SignUpRequestedEvent event,
-    Emitter<AuthState> emit,
-  ) async {
+      SignUpRequestedEvent event,
+      Emitter<AuthState> emit,
+      ) async {
     try {
       final UserAuthPayload userAuthPayload = UserAuthPayload(
         email: event.email,

@@ -15,13 +15,13 @@ class AuthProviderImpl implements AuthenticationProvider {
   }
 
   @override
-  Future<String> signIn(UserAuthPayload userAuthPayload) async {
+  Future<String> signIn(UserAuthPayload payload) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userAuthPayload.email,
-        password: userAuthPayload.password,
+        email: payload.email,
+        password: payload.password,
       );
-      return userAuthPayload.email;
+      return payload.email;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         throw ('Wrong email or password');
@@ -32,13 +32,13 @@ class AuthProviderImpl implements AuthenticationProvider {
   }
 
   @override
-  Future<String> signUp(UserAuthPayload userAuthPayload) async {
+  Future<String> signUp(UserAuthPayload payload) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: userAuthPayload.email,
-        password: userAuthPayload.password,
+        email: payload.email,
+        password: payload.password,
       );
-      return userAuthPayload.email;
+      return payload.email;
     } on FirebaseAuthException catch (e) {
       throw (e.message.toString(),);
     }

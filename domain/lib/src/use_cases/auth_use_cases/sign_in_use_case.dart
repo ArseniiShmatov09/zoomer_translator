@@ -7,9 +7,8 @@ class SignInUseCase implements FutureUseCase<UserAuthPayload, String> {
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
   final AuthRepository _authRepository;
-
   @override
-  Future<String> execute(UserAuthPayload payload) async {
-    return _authRepository.signIn(payload);
+  Future<String> execute(UserAuthPayload userAuthPayload) {
+    return _authRepository.signIn(userAuthPayload);
   }
 }

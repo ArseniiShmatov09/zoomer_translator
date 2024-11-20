@@ -1,5 +1,5 @@
 import 'package:domain/src/use_cases/use_case.dart';
-import '../repositories/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 class LogoutUseCase implements FutureUseCase<NoParams, void> {
   LogoutUseCase({

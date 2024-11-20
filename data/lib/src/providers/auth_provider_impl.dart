@@ -15,11 +15,11 @@ class AuthProviderImpl implements AuthenticationProvider {
   }
 
   @override
-  Future<void> signIn(UserAuthPayload userAuthPayload) async {
+  Future<void> signIn(UserAuthPayload payload) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userAuthPayload.email,
-        password: userAuthPayload.password,
+        email: payload.email,
+        password: payload.password,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
@@ -31,11 +31,11 @@ class AuthProviderImpl implements AuthenticationProvider {
   }
 
   @override
-  Future<void> signUp(UserAuthPayload userAuthPayload) async {
+  Future<void> signUp(UserAuthPayload payload) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: userAuthPayload.email,
-        password: userAuthPayload.password,
+        email: payload.email,
+        password: payload.password,
       );
     } on FirebaseAuthException catch (e) {
       throw (e.message.toString(),);

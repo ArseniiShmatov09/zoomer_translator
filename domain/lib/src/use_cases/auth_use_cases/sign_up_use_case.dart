@@ -1,6 +1,6 @@
 import 'package:domain/src/use_cases/use_case.dart';
-import '../payloads/payloads.dart';
-import '../repositories/auth_repository.dart';
+import '../../payloads/payloads.dart';
+import '../../repositories/auth_repository.dart';
 
 class SignUpUseCase implements FutureUseCase<UserAuthPayload, void> {
   SignUpUseCase({
@@ -8,7 +8,7 @@ class SignUpUseCase implements FutureUseCase<UserAuthPayload, void> {
   }) : _authRepository = authRepository;
   final AuthRepository _authRepository;
   @override
-  Future<void> execute(UserAuthPayload userAuthPayload) {
-    return _authRepository.signUp(userAuthPayload);
+  Future<void> execute(UserAuthPayload payload) {
+    return _authRepository.signUp(payload);
   }
 }

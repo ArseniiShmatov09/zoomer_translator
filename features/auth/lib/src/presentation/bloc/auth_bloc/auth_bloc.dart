@@ -29,12 +29,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       state.copyWith(status: AuthStatus.loading),
     );
     try {
-      final UserAuthPayload userAuthPayload = UserAuthPayload(
+      final UserAuthPayload payload = UserAuthPayload(
         email: event.email,
         password: event.password,
       );
       await _signInUseCase.execute(
-        userAuthPayload,
+        payload,
       );
       emit(
         state.copyWith(status: AuthStatus.success),
@@ -57,12 +57,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       state.copyWith(status: AuthStatus.loading),
     );
     try {
-      final UserAuthPayload userAuthPayload = UserAuthPayload(
+      final UserAuthPayload payload = UserAuthPayload(
         email: event.email,
         password: event.password,
       );
       await _signUpUseCase.execute(
-        userAuthPayload,
+        payload,
       );
       emit(
         state.copyWith(

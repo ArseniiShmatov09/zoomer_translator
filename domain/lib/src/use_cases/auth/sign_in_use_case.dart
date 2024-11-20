@@ -7,13 +7,9 @@ class SignInUseCase implements FutureUseCase<UserAuthPayload, String> {
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
   final AuthRepository _authRepository;
+
   @override
-<<<<<<<< HEAD:domain/lib/src/use_cases/auth_use_cases/sign_in_use_case.dart
-  Future<void> execute(UserAuthPayload payload) {
+  Future<String> execute(UserAuthPayload payload) async {
     return _authRepository.signIn(payload);
-========
-  Future<String> execute(UserAuthPayload userAuthPayload) {
-    return _authRepository.signIn(userAuthPayload);
->>>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537:domain/lib/src/use_cases/auth/sign_in_use_case.dart
   }
 }

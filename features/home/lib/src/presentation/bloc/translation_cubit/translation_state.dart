@@ -6,12 +6,12 @@ class TranslationState {
   const TranslationState({
     this.translatedPhrase,
     this.errorText,
-    this.status = TranslationStatus.loading,
+    this.status,
   });
 
   final String? translatedPhrase;
   final String? errorText;
-  final TranslationStatus status;
+  final TranslationStatus? status;
 
   TranslationState copyWith({
     final String? translatedPhrase,
@@ -21,7 +21,7 @@ class TranslationState {
     return TranslationState(
       translatedPhrase: translatedPhrase,
       errorText: errorText,
-      status: status ?? this.status,
+      status: status,
     );
   }
 }

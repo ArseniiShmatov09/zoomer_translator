@@ -18,28 +18,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _signUpUseCase = signUpUseCase,
         _setLoggedInUserUseCase = setLoggedInUserUseCase,
         super(
-          const AuthState(),
-        ) {
+        const AuthState(),
+      ) {
     on<SignInRequestedEvent>(_onSignInRequested);
     on<SignUpRequestedEvent>(_onSignUpRequested);
   }
 
   Future<void> _onSignInRequested(
-    SignInRequestedEvent event,
-    Emitter<AuthState> emit,
-  ) async {
+      SignInRequestedEvent event,
+      Emitter<AuthState> emit,
+      ) async {
     try {
-      final UserAuthPayload payload = UserAuthPayload(
+      final UserAuthPayload userAuthPayload = UserAuthPayload(
         email: event.email,
         password: event.password,
       );
-<<<<<<< HEAD
-      await _signInUseCase.execute(
-        payload,
-=======
       final String email = await _signInUseCase.execute(
         userAuthPayload,
->>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537
       );
       await _setLoggedInUserUseCase.execute(
         email,
@@ -58,21 +53,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignUpRequested(
-    SignUpRequestedEvent event,
-    Emitter<AuthState> emit,
-  ) async {
+      SignUpRequestedEvent event,
+      Emitter<AuthState> emit,
+      ) async {
     try {
-      final UserAuthPayload payload = UserAuthPayload(
+      final UserAuthPayload userAuthPayload = UserAuthPayload(
         email: event.email,
         password: event.password,
       );
-<<<<<<< HEAD
-      await _signUpUseCase.execute(
-        payload,
-=======
       final String email = await _signUpUseCase.execute(
         userAuthPayload,
->>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537
       );
       await _setLoggedInUserUseCase.execute(
         email,

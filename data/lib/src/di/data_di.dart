@@ -49,9 +49,9 @@ abstract class DataDI {
 
   static Future<void> _initSharedPreferences(GetIt locator) async {
     final SharedPreferencesProvider sharedPreferencesProvider =
-    await SharedPreferencesProvider.init();
+        await SharedPreferencesProvider.init();
     locator.registerLazySingleton<SharedPreferencesProvider>(
-          () => sharedPreferencesProvider,
+      () => sharedPreferencesProvider,
     );
   }
 
@@ -62,15 +62,15 @@ abstract class DataDI {
       ),
     );
 
-<<<<<<< HEAD
     locator.registerFactory<AIRepository>(
       () => AIRepositoryImpl(
         aiProvider: locator<AIProviderImpl>(),
-=======
+      ),
+    );
+
     locator.registerFactory<UserSessionRepository>(
-          () => UserSessionRepositoryImpl(
+      () => UserSessionRepositoryImpl(
         preferences: locator<SharedPreferencesProvider>(),
->>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537
       ),
     );
   }

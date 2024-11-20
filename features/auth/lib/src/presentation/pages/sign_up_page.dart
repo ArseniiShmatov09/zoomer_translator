@@ -11,18 +11,22 @@ import '../bloc/auth_bloc/auth_bloc.dart';
 @RoutePage()
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
+
 class _SignUpPageState extends State<SignUpPage> {
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
+
   @override
   void initState() {
     super.initState();
     passwordController = TextEditingController();
     emailController = TextEditingController();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
         create: (BuildContext context) => AuthBloc(
           signUpUseCase: appLocator<SignUpUseCase>(),
           signInUseCase: appLocator<SignInUseCase>(),
+          setLoggedInUserUseCase: appLocator<SetLoggedInUserUseCase>(),
         ),
         child: Padding(
           padding: const EdgeInsets.all(AppDimens.padding20),
@@ -79,7 +84,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   } else if (state.status == AuthStatus.failure) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(state.errorText,),
+                        content: Text(
+                          state.errorText,
+                        ),
                       ),
                     );
                   }
@@ -97,11 +104,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         return;
                       }
                       context.read<AuthBloc>().add(
-                        SignUpRequestedEvent(
-                          emailController.text,
-                          passwordController.text,
-                        ),
-                      );
+                            SignUpRequestedEvent(
+                              emailController.text,
+                              passwordController.text,
+                            ),
+                          );
                     },
                     child: Text(
                       'Sign Up',

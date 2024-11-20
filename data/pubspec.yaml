@@ -16,7 +16,11 @@ dependencies:
     path: ../domain
   firebase_core: ^3.6.0
   firebase_auth: ^5.3.1
+<<<<<<< HEAD
   http: ^1.2.2
+=======
+  shared_preferences: ^2.2.3
+>>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537
 
 dev_dependencies:
   flutter_test:

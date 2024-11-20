@@ -8,12 +8,15 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase _signInUseCase;
   final SignUpUseCase _signUpUseCase;
+  final SetLoggedInUserUseCase _setLoggedInUserUseCase;
 
   AuthBloc({
     required SignInUseCase signInUseCase,
     required SignUpUseCase signUpUseCase,
+    required SetLoggedInUserUseCase setLoggedInUserUseCase,
   })  : _signInUseCase = signInUseCase,
         _signUpUseCase = signUpUseCase,
+        _setLoggedInUserUseCase = setLoggedInUserUseCase,
         super(
           const AuthState(),
         ) {
@@ -25,16 +28,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignInRequestedEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(
-      state.copyWith(status: AuthStatus.loading),
-    );
     try {
       final UserAuthPayload payload = UserAuthPayload(
         email: event.email,
         password: event.password,
       );
+<<<<<<< HEAD
       await _signInUseCase.execute(
         payload,
+=======
+      final String email = await _signInUseCase.execute(
+        userAuthPayload,
+>>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537
+      );
+      await _setLoggedInUserUseCase.execute(
+        email,
       );
       emit(
         state.copyWith(status: AuthStatus.success),
@@ -53,16 +61,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignUpRequestedEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(
-      state.copyWith(status: AuthStatus.loading),
-    );
     try {
       final UserAuthPayload payload = UserAuthPayload(
         email: event.email,
         password: event.password,
       );
+<<<<<<< HEAD
       await _signUpUseCase.execute(
         payload,
+=======
+      final String email = await _signUpUseCase.execute(
+        userAuthPayload,
+>>>>>>> 9f504f845f8fa0f6c6cedf4cc4ca273ea3a01537
+      );
+      await _setLoggedInUserUseCase.execute(
+        email,
       );
       emit(
         state.copyWith(

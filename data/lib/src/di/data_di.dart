@@ -1,7 +1,9 @@
 import 'package:core/core.dart';
 import 'package:data/src/providers/ai_provider_impl.dart';
+import 'package:data/src/providers/translation_history_provider_impl.dart';
 import 'package:data/src/repositories/ai_repository_impl.dart';
 import 'package:data/src/repositories/auth_repository_impl.dart';
+import 'package:data/src/repositories/translation_history_repository_impl.dart';
 import 'package:data/src/repositories/user_session_repository_impl.dart';
 import 'package:domain/domain.dart';
 
@@ -42,8 +44,13 @@ abstract class DataDI {
     locator.registerFactory<AuthProviderImpl>(
       AuthProviderImpl.new,
     );
+
     locator.registerFactory<AIProviderImpl>(
       AIProviderImpl.new,
+    );
+
+    locator.registerFactory<TranslationHistoryProviderImpl>(
+      TranslationHistoryProviderImpl.new,
     );
   }
 
@@ -71,6 +78,12 @@ abstract class DataDI {
     locator.registerFactory<UserSessionRepository>(
       () => UserSessionRepositoryImpl(
         preferences: locator<SharedPreferencesProvider>(),
+      ),
+    );
+
+    locator.registerFactory<TranslationHistoryRepository>(
+      () => TranslationHistoryRepositoryImpl(
+        translationHistoryProvider: locator<TranslationHistoryProviderImpl>(),
       ),
     );
   }

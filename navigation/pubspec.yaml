@@ -17,6 +17,8 @@ dependencies:
     path: ../features/home
   auth:
     path: ../features/auth
+  translation_history:
+    path: ../features/translation_history
 
   auto_route: ^7.8.4
 

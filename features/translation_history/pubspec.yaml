@@ -1,5 +1,5 @@
-name: translation
-description: Home feature
+name: translation_history
+description: translation history feature
 version: 0.0.1
 publish_to: none
 

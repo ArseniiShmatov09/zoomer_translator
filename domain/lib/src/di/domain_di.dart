@@ -37,10 +37,24 @@ abstract class DomainDI {
         userSessionRepository: locator<UserSessionRepository>(),
       ),
     );
+
     locator.registerFactory<GetTranslatedPhraseUseCase>(
       () => GetTranslatedPhraseUseCase(
         aiRepository: locator<AIRepository>(),
       ),
     );
+
+    locator.registerFactory<GetTranslationHistoryListUseCase>(
+      () => GetTranslationHistoryListUseCase(
+        translationHistoryRepository: locator<TranslationHistoryRepository>(),
+      ),
+    );
+
+    locator.registerFactory<AddTranslationToHistoryUseCase>(
+          () => AddTranslationToHistoryUseCase(
+        translationHistoryRepository: locator<TranslationHistoryRepository>(),
+      ),
+    );
+
   }
 }

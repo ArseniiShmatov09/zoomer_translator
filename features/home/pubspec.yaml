@@ -21,6 +21,8 @@ dependencies:
     path: ../../navigation
   auth:
     path: ../../features/auth
+  translation_history:
+    path: ../../features/translation_history
 
 dev_dependencies:
   flutter_test:

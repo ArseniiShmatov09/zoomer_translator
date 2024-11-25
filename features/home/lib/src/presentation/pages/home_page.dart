@@ -5,6 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:home/src/presentation/bloc/translation_cubit/translation_cubit.dart';
 import 'package:navigation/navigation.dart';
+import 'package:translation_history/translation_history.gm.dart';
 
 import '../bloc/logout_bloc/logout_bloc.dart';
 import '../widgets/translation_section.dart';
@@ -22,6 +23,12 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  void _navigateToHistory(BuildContext context) {
+    AutoRouter.of(context).push(
+      const TranslationHistoryRoute(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -34,7 +41,9 @@ class HomePage extends StatelessWidget {
         BlocProvider<TranslationCubit>(
           create: (BuildContext context) => TranslationCubit(
             getTranslatedPhraseUseCase:
-            appLocator<GetTranslatedPhraseUseCase>(),
+                appLocator<GetTranslatedPhraseUseCase>(),
+            addTranslationToHistoryUseCase:
+                appLocator<AddTranslationToHistoryUseCase>(),
           ),
         ),
       ],
@@ -60,9 +69,15 @@ class HomePage extends StatelessWidget {
           ],
         ),
         body: const TranslationSection(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _navigateToHistory(context),
+          backgroundColor: AppColors.of(context).white,
+          child: Icon(
+            Icons.history_toggle_off,
+            color: AppColors.of(context).black,
+          ),
+        ),
       ),
     );
   }
 }
-
-

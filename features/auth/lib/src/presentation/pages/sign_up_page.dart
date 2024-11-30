@@ -29,70 +29,76 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.of(context).black,
-        title: Text(
-          'Sign Up',
-          style: TextStyle(
-            color: AppColors.of(context).white,
-          ),
-        ),
-        centerTitle: true,
+    return BlocProvider<AuthBloc>(
+      create: (BuildContext context) => AuthBloc(
+        signUpUseCase: appLocator<SignUpUseCase>(),
+        signInUseCase: appLocator<SignInUseCase>(),
       ),
-      backgroundColor: AppColors.of(context).black,
-      body: BlocProvider<AuthBloc>(
-        create: (BuildContext context) => AuthBloc(
-          signUpUseCase: appLocator<SignUpUseCase>(),
-          signInUseCase: appLocator<SignInUseCase>(),
-          setLoggedInUserUseCase: appLocator<SetLoggedInUserUseCase>(),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(AppDimens.padding20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (BuildContext context, AuthState state) {
+          if (state.status == AuthStatus.success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Successfully registered!'),
+              ),
+            );
+            AutoRouter.of(context).replace(
+              const HomeRoute(),
+            );
+          } else if (state.status == AuthStatus.failure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorText),
+              ),
+            );
+          }
+        },
+        builder: (BuildContext context, AuthState state) {
+          if (state.status == AuthStatus.loading) {
+            return Scaffold(
+              backgroundColor: AppColors.of(context).black,
+              body: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: AppColors.of(context).black,
+              title: Text(
+                'Sign Up',
+                style: TextStyle(
+                  color: AppColors.of(context).white,
                 ),
               ),
-              const SizedBox(height: AppDimens.padding20),
-              TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-              ),
-              const SizedBox(height: AppDimens.padding20),
-              BlocConsumer<AuthBloc, AuthState>(
-                listener: (BuildContext context, AuthState state) {
-                  if (state.status == AuthStatus.success) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Successful registered!'),
-                      ),
-                    );
-                    AutoRouter.of(context).replace(
-                      const HomeRoute(),
-                    );
-                  } else if (state.status == AuthStatus.failure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          state.errorText,
-                        ),
-                      ),
-                    );
-                  }
-                },
-                builder: (BuildContext context, AuthState state) {
-                  return ElevatedButton(
+              centerTitle: true,
+            ),
+            backgroundColor: AppColors.of(context).black,
+            body: Padding(
+              padding: const EdgeInsets.all(AppDimens.padding20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: AppDimens.padding20),
+                  TextField(
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                    ),
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: AppDimens.padding20),
+                  ElevatedButton(
                     onPressed: () {
                       if (emailController.text.isEmpty ||
                           passwordController.text.isEmpty) {
@@ -104,11 +110,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         return;
                       }
                       context.read<AuthBloc>().add(
-                            SignUpRequestedEvent(
-                              emailController.text,
-                              passwordController.text,
-                            ),
-                          );
+                        SignUpRequestedEvent(
+                          emailController.text,
+                          passwordController.text,
+                        ),
+                      );
                     },
                     child: Text(
                       'Sign Up',
@@ -116,26 +122,27 @@ class _SignUpPageState extends State<SignUpPage> {
                         color: AppColors.of(context).black,
                       ),
                     ),
-                  );
-                },
-              ),
-              TextButton(
-                onPressed: () {
-                  AutoRouter.of(context).replace(
-                    const SignInRoute(),
-                  );
-                },
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(
-                    color: AppColors.of(context).white,
                   ),
-                ),
+                  TextButton(
+                    onPressed: () {
+                      AutoRouter.of(context).replace(
+                        const SignInRoute(),
+                      );
+                    },
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: AppColors.of(context).white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 }
+

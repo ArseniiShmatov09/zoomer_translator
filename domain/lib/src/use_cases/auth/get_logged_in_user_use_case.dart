@@ -1,19 +1,17 @@
-import 'package:domain/src/repositories/repositories.dart';
-
-import '../export_use_cases.dart';
+import 'package:domain/domain.dart';
 
 class GetLoggedInUserUseCase implements FutureUseCase<NoParams, void> {
   GetLoggedInUserUseCase({
-    required UserSessionRepository userSessionRepository,
-  }) : _userSessionRepository = userSessionRepository;
+    required AuthRepository authRepository,
+  }) : _authRepository = authRepository;
 
-  final UserSessionRepository _userSessionRepository;
+  final AuthRepository _authRepository;
 
   @override
   Future<bool> execute(NoParams noParams) async {
 
-    final String? userId = await _userSessionRepository.getLoggedInUser();
-    if (userId != null && userId.isNotEmpty) {
+    final String? accessToken = await _authRepository.getLoggedInUser();
+    if (accessToken != null && accessToken.isNotEmpty) {
       return true;
     }
     else {

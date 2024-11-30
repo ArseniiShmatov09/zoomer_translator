@@ -4,7 +4,6 @@ import 'package:data/src/providers/translation_history_provider_impl.dart';
 import 'package:data/src/repositories/ai_repository_impl.dart';
 import 'package:data/src/repositories/auth_repository_impl.dart';
 import 'package:data/src/repositories/translation_history_repository_impl.dart';
-import 'package:data/src/repositories/user_session_repository_impl.dart';
 import 'package:domain/domain.dart';
 
 import '../errors/error_handler.dart';
@@ -72,12 +71,6 @@ abstract class DataDI {
     locator.registerFactory<AIRepository>(
       () => AIRepositoryImpl(
         aiProvider: locator<AIProviderImpl>(),
-      ),
-    );
-
-    locator.registerFactory<UserSessionRepository>(
-      () => UserSessionRepositoryImpl(
-        preferences: locator<SharedPreferencesProvider>(),
       ),
     );
 

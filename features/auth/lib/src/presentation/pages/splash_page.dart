@@ -25,7 +25,7 @@ class SplashPage extends StatelessWidget {
             case SplashStatus.loading:
               return Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.of(context).black,
+                  color: AppColors.of(context).white,
                 ),
               );
 

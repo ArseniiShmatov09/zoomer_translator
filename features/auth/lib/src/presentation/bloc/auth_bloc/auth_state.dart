@@ -1,5 +1,5 @@
 part of 'auth_bloc.dart';
-enum AuthStatus { initial, success, failure }
+enum AuthStatus { initial, loading, success, failure }
 class AuthState {
   const AuthState({
     this.status = AuthStatus.initial,

@@ -22,19 +22,12 @@ abstract class DomainDI {
     locator.registerFactory<LogoutUseCase>(
       () => LogoutUseCase(
         authRepository: locator<AuthRepository>(),
-        userSessionRepository: locator<UserSessionRepository>(),
       ),
     );
 
     locator.registerFactory<GetLoggedInUserUseCase>(
       () => GetLoggedInUserUseCase(
-        userSessionRepository: locator<UserSessionRepository>(),
-      ),
-    );
-
-    locator.registerFactory<SetLoggedInUserUseCase>(
-      () => SetLoggedInUserUseCase(
-        userSessionRepository: locator<UserSessionRepository>(),
+        authRepository: locator<AuthRepository>(),
       ),
     );
 

@@ -12,7 +12,12 @@ class TranslationHistoryProviderImpl implements TranslationHistoryProvider {
   @override
   Future<List<TranslationHistoryEntity>> getTranslationHistoryList() async {
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await _translationHistory.get();
+        await _translationHistory
+            .orderBy(
+              'createdAt',
+              descending: true,
+            )
+            .get();
     return querySnapshot.docs
         .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
       return TranslationHistoryEntity.fromMap(

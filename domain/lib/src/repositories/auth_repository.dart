@@ -1,9 +1,12 @@
 import '../payloads/payloads.dart';
 
 abstract class AuthRepository {
-  Future<String> signIn(UserAuthPayload payload);
+  Future<void> signIn(UserAuthPayload payload);
 
-  Future<String> signUp(UserAuthPayload payload);
+  Future<void> signUp(UserAuthPayload payload);
 
   Future<void> logout();
+
+  Future<String?> getLoggedInUser();
+
 }

@@ -14,12 +14,17 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String> signIn(UserAuthPayload payload) {
+  Future<void> signIn(UserAuthPayload payload) {
     return _authProvider.signIn(payload);
   }
 
   @override
-  Future<String> signUp(UserAuthPayload payload) {
+  Future<void> signUp(UserAuthPayload payload) {
     return _authProvider.signUp(payload);
+  }
+
+  @override
+  Future<String?> getLoggedInUser() async {
+    return _authProvider.getCurrentUserToken();
   }
 }

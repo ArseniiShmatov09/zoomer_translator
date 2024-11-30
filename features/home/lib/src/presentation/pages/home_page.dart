@@ -58,8 +58,9 @@ class HomePage extends StatelessWidget {
           actions: <Widget>[
             Builder(
               builder: (BuildContext localContext) => IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.logout,
+                  color: AppColors.of(context).white,
                 ),
                 onPressed: () {
                   _logout(localContext);

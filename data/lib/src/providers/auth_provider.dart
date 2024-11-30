@@ -1,9 +1,11 @@
 import 'package:domain/domain.dart';
 
 abstract class AuthenticationProvider {
-  Future<String> signIn(UserAuthPayload payload);
+  Future<void> signIn(UserAuthPayload payload);
 
-  Future<String> signUp(UserAuthPayload payload);
+  Future<void> signUp(UserAuthPayload payload);
 
   Future<void> logout();
+
+  Future<String?> getCurrentUserToken();
 }

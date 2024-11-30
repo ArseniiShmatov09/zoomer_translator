@@ -1,0 +1,77 @@
+@startuml
+class HomeModule {
+---
+}
+$HomeModule <|-- HomeModule
+abstract class $HomeModule {
+---
+pagesMap: Map<String, _i2.PageFactory>
+}
+AutoRouterModule <|-- $HomeModule
+class HomeRoute {
+---
+name: String
+page: _i2.PageInfo<void>
+}
+PageRouteInfo <|-- HomeRoute
+HomeRoute ..> _i2.PageInfo
+class LogoutBloc {
+---
+-logoutUseCase: LogoutUseCase
+-_onLogoutRequested(): void
+}
+Bloc <|-- LogoutBloc
+LogoutBloc ..> LogoutUseCase
+abstract class LogoutEvent {
+---
+props(): Object?[0..*]
+}
+class LogoutRequestedEvent {
+---
+props(): Object?[0..*]
+}
+LogoutEvent <|-- LogoutRequestedEvent
+class LogoutState {
+---
+errorText: String?
+copyWith(): LogoutState
+}
+class TranslationCubit {
+---
+-getTranslatedPhraseUseCase: GetTranslatedPhraseUseCase
+-addTranslationToHistoryUseCase: AddTranslationToHistoryUseCase
+onTranslationRequested(): void
+}
+Cubit <|-- TranslationCubit
+TranslationCubit ..> GetTranslatedPhraseUseCase
+TranslationCubit ..> AddTranslationToHistoryUseCase
+class TranslationState {
+---
+translatedPhrase: String?
+errorText: String?
+status: TranslationStatus?
+copyWith(): TranslationState
+}
+TranslationState ..> TranslationStatus
+class HomePage {
+---
+-_logout(): void
+-_navigateToHistory(): void
+build(): Widget
+}
+StatelessWidget <|-- HomePage
+class TranslationSection {
+---
+createState(): State<TranslationSection
+}
+StatefulWidget <|-- TranslationSection
+class _TranslationSectionState {
+---
+-controller: TextEditingController
+initState(): void
+build(): Widget
+-_translatePhrase(): void
+}
+State <|-- _TranslationSectionState
+_TranslationSectionState ..> TextEditingController
+@enduml

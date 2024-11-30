@@ -1,0 +1,38 @@
+@startuml
+class TranslationHistoryCubit {
+---
+-getTranslationHistoryListUseCase: GetTranslationHistoryListUseCase
+fetchHistory(): void
+}
+Cubit <|-- TranslationHistoryCubit
+TranslationHistoryCubit ..> GetTranslationHistoryListUseCase
+class TranslationHistoryState {
+---
+errorText: String?
+status: TranslationHistoryStateStatus?
+translationHistories: List<TranslationHistoryModel>?
+copyWith(): TranslationHistoryState
+}
+TranslationHistoryState ..> TranslationHistoryStateStatus
+class TranslationHistoryPage {
+---
+build(): Widget
+}
+StatelessWidget <|-- TranslationHistoryPage
+class TranslationHistoryModule {
+---
+}
+$TranslationHistoryModule <|-- TranslationHistoryModule
+abstract class $TranslationHistoryModule {
+---
+pagesMap: Map<String, _i2.PageFactory>
+}
+AutoRouterModule <|-- $TranslationHistoryModule
+class TranslationHistoryRoute {
+---
+name: String
+page: _i2.PageInfo<void>
+}
+PageRouteInfo <|-- TranslationHistoryRoute
+TranslationHistoryRoute ..> _i2.PageInfo
+@enduml

@@ -10,6 +10,7 @@ class TranslationHistoryMapper {
       createdAt: Timestamp.fromDate(
         history.createdAt,
       ),
+      userId: history.userId,
     );
   }
 
@@ -19,6 +20,7 @@ class TranslationHistoryMapper {
       inputPhrase: history.inputPhrase,
       translatedPhrase: history.translatedPhrase,
       createdAt: history.createdAt.toDate(),
+      userId: history.userId,
     );
   }
 }

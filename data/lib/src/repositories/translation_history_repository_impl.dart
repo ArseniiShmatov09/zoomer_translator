@@ -10,9 +10,9 @@ class TranslationHistoryRepositoryImpl implements TranslationHistoryRepository {
   });
 
   @override
-  Future<List<TranslationHistoryModel>> getAllCvs() async {
+  Future<List<TranslationHistoryModel>> getAllCvs(GetTranslationHistoryListPayload payload) async {
     List<TranslationHistoryEntity> translationHistoryEntities =
-        await translationHistoryProvider.getTranslationHistoryList();
+        await translationHistoryProvider.getTranslationHistoryList(payload);
     return translationHistoryEntities
         .map(TranslationHistoryMapper.toDomainModel)
         .toList();

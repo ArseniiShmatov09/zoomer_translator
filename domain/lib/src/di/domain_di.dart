@@ -31,6 +31,12 @@ abstract class DomainDI {
       ),
     );
 
+    locator.registerFactory<GetCurrentUserIdUseCase>(
+      () => GetCurrentUserIdUseCase(
+        authRepository: locator<AuthRepository>(),
+      ),
+    );
+
     locator.registerFactory<GetTranslatedPhraseUseCase>(
       () => GetTranslatedPhraseUseCase(
         aiRepository: locator<AIRepository>(),
@@ -44,10 +50,9 @@ abstract class DomainDI {
     );
 
     locator.registerFactory<AddTranslationToHistoryUseCase>(
-          () => AddTranslationToHistoryUseCase(
+      () => AddTranslationToHistoryUseCase(
         translationHistoryRepository: locator<TranslationHistoryRepository>(),
       ),
     );
-
   }
 }

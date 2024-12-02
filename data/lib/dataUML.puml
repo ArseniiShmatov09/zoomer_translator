@@ -1,0 +1,84 @@
+@startuml
+set namespaceSeparator ::
+
+abstract class "data::src::di::data_di.dart::DataDI" {
+  {static} +void initDependencies()
+  {static} -void _initApi()
+  {static} -void _initProviders()
+  {static} -dynamic _initSharedPreferences()
+  {static} -void _initRepositories()
+}
+
+class "data::src::entities::translation_history_entity.dart::TranslationHistoryEntity" {
+  +String inputPhrase
+  +String translatedPhrase
+  +Timestamp createdAt
+  {static} +TranslationHistoryEntity fromMap()
+  +Map<String, dynamic> toMap()
+}
+
+"data::src::entities::translation_history_entity.dart::TranslationHistoryEntity" o-- "cloud_firestore_platform_interface::src::timestamp.dart::Timestamp"
+
+class "data::src::errors::error_handler.dart::ErrorHandler" {
+  -AppEventNotifier _eventNotifier
+  +dynamic handleError()
+}
+
+"data::src::errors::error_handler.dart::ErrorHandler" o-- "core::src::events::app_event_bus_interface.dart::AppEventNotifier"
+
+class "data::src::mappers::translation_history_mapper.dart::TranslationHistoryMapper" {
+  {static} +TranslationHistoryEntity toDataModel()
+  {static} +TranslationHistoryModel toDomainModel()
+}
+
+abstract class "data::src::providers::ai_provider.dart::AIProvider" {
+  +dynamic getAIResponse()
+}
+
+class "data::src::providers::ai_provider_impl.dart::AIProviderImpl" {
+  +dynamic getAIResponse()
+}
+
+"data::src::providers::ai_provider.dart::AIProvider" <|-- "data::src::providers::ai_provider_impl.dart::AIProviderImpl"
+
+class "data::src::providers::api_provider.dart::ApiProvider" {
+  -Dio _dio
+}
+
+"data::src::providers::api_provider.dart::ApiProvider" o-- "dio::src::dio.dart::Dio"
+
+abstract class "data::src::providers::auth_provider.dart::AuthenticationProvider" {
+  +dynamic signIn()
+  +dynamic signUp()
+  +dynamic logout()
+  +dynamic getCurrentUserToken()
+}
+
+class "data::src::providers::auth_provider_impl.dart::AuthProviderImpl" {
+  +dynamic logout()
+  +dynamic signIn()
+  +dynamic signUp()
+  +dynamic getCurrentUserToken()
+}
+
+"data::src::providers::auth_provider.dart::AuthenticationProvider" <|-- "data::src::providers::auth_provider_impl.dart::AuthProviderImpl"
+
+abstract class "data::src::providers::local_data_provider.dart::LocalDataProvider" {
+  +dynamic write()
+  +dynamic read()
+  +dynamic delete()
+  +dynamic deleteAll()
+  +dynamic contains()
+}
+
+class "data::src::providers::local_data_provider.dart::LocalDataProviderImpl" {
+  +dynamic contains()
+  +dynamic delete()
+  +dynamic deleteAll()
+  +dynamic read()
+  +dynamic write()
+}
+
+"data::src::providers::local_data_provider.dart::LocalDataProvider" <|-- "data::src::providers::local_data_provider.dart::LocalDataProviderImpl"
+
+@enduml

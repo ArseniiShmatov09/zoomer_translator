@@ -1,0 +1,129 @@
+@startuml
+set namespaceSeparator ::
+
+abstract class "domain::src::di::domain_di.dart::DomainDI" {
+  {static} +void initDependencies()
+  {static} -void _initUseCases()
+}
+
+class "domain::src::events::domain_events.dart::DomainEvent" {
+}
+
+"core::src::events::app_event_bus_interface.dart::AppEvent" <|-- "domain::src::events::domain_events.dart::DomainEvent"
+
+class "domain::src::events::domain_events.dart::UnauthorizedEvent" {
+}
+
+"domain::src::events::domain_events.dart::DomainEvent" <|-- "domain::src::events::domain_events.dart::UnauthorizedEvent"
+
+class "domain::src::exceptions::app_exception.dart::AppException" {
+  +String message
+  +String toString()
+}
+
+"dart::core::Exception" <|-- "domain::src::exceptions::app_exception.dart::AppException"
+
+class "domain::src::models::translation_history_model.dart::TranslationHistoryModel" {
+  +String inputPhrase
+  +String translatedPhrase
+  +DateTime createdAt
+}
+
+class "domain::src::payloads::get_translated_phrase_payload.dart::GetTranslatedPhrasePayload" {
+  +String inputPhrase
+}
+
+class "domain::src::payloads::user_payload.dart::UserAuthPayload" {
+  +String email
+  +String password
+}
+
+abstract class "domain::src::repositories::ai_repository.dart::AIRepository" {
+  +dynamic getAIResponse()
+}
+
+abstract class "domain::src::repositories::auth_repository.dart::AuthRepository" {
+  +dynamic signIn()
+  +dynamic signUp()
+  +dynamic logout()
+  +dynamic getLoggedInUser()
+}
+
+abstract class "domain::src::repositories::translation_history_repository.dart::TranslationHistoryRepository" {
+  +dynamic getAllCvs()
+  +dynamic addTranslationToHistory()
+}
+
+class "domain::src::use_cases::ai_use_cases::get_translated_phrase_use_case.dart::GetTranslatedPhraseUseCase" {
+  -AIRepository _aiRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::ai_use_cases::get_translated_phrase_use_case.dart::GetTranslatedPhraseUseCase" o-- "domain::src::repositories::ai_repository.dart::AIRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::ai_use_cases::get_translated_phrase_use_case.dart::GetTranslatedPhraseUseCase"
+
+class "domain::src::use_cases::auth::get_logged_in_user_use_case.dart::GetLoggedInUserUseCase" {
+  -AuthRepository _authRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::auth::get_logged_in_user_use_case.dart::GetLoggedInUserUseCase" o-- "domain::src::repositories::auth_repository.dart::AuthRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::auth::get_logged_in_user_use_case.dart::GetLoggedInUserUseCase"
+
+class "domain::src::use_cases::auth::logout_use_case.dart::LogoutUseCase" {
+  -AuthRepository _authRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::auth::logout_use_case.dart::LogoutUseCase" o-- "domain::src::repositories::auth_repository.dart::AuthRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::auth::logout_use_case.dart::LogoutUseCase"
+
+class "domain::src::use_cases::auth::sign_in_use_case.dart::SignInUseCase" {
+  -AuthRepository _authRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::auth::sign_in_use_case.dart::SignInUseCase" o-- "domain::src::repositories::auth_repository.dart::AuthRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::auth::sign_in_use_case.dart::SignInUseCase"
+
+class "domain::src::use_cases::auth::sign_up_use_case.dart::SignUpUseCase" {
+  -AuthRepository _authRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::auth::sign_up_use_case.dart::SignUpUseCase" o-- "domain::src::repositories::auth_repository.dart::AuthRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::auth::sign_up_use_case.dart::SignUpUseCase"
+
+class "domain::src::use_cases::translation_history_use_cases::add_translation_to_history_use_case.dart::AddTranslationToHistoryUseCase" {
+  +TranslationHistoryRepository translationHistoryRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::translation_history_use_cases::add_translation_to_history_use_case.dart::AddTranslationToHistoryUseCase" o-- "domain::src::repositories::translation_history_repository.dart::TranslationHistoryRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::translation_history_use_cases::add_translation_to_history_use_case.dart::AddTranslationToHistoryUseCase"
+
+class "domain::src::use_cases::translation_history_use_cases::get_translation_history_list_use_case.dart::GetTranslationHistoryListUseCase" {
+  -TranslationHistoryRepository _translationHistoryRepository
+  +dynamic execute()
+}
+
+"domain::src::use_cases::translation_history_use_cases::get_translation_history_list_use_case.dart::GetTranslationHistoryListUseCase" o-- "domain::src::repositories::translation_history_repository.dart::TranslationHistoryRepository"
+"domain::src::use_cases::use_case.dart::FutureUseCase" <|-- "domain::src::use_cases::translation_history_use_cases::get_translation_history_list_use_case.dart::GetTranslationHistoryListUseCase"
+
+abstract class "domain::src::use_cases::use_case.dart::UseCase" {
+  +Output execute()
+}
+
+abstract class "domain::src::use_cases::use_case.dart::FutureUseCase" {
+  +dynamic execute()
+}
+
+abstract class "domain::src::use_cases::use_case.dart::StreamUseCase" {
+  +Stream<Output> execute()
+}
+
+class "domain::src::use_cases::use_case.dart::NoParams" {
+}
+
+
+@enduml

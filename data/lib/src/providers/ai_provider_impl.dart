@@ -11,7 +11,7 @@ class AIProviderImpl implements AIProvider{
   Future<String> getAIResponse(GetTranslatedPhrasePayload payload) async {
     try {
      final Map<String, dynamic> requestBody = {
-        'workerId': 'd329b165-bc40-4929-ae10-5d099bd11cc6',
+        'workerId': AppConstants.workerId,
         'variables': {'input': payload.inputPhrase},
         'workflow': "Main.flow",
       };

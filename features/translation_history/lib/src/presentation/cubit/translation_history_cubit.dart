@@ -5,10 +5,13 @@ part 'translation_history_state.dart';
 
 class TranslationHistoryCubit extends Cubit<TranslationHistoryState> {
   final GetTranslationHistoryListUseCase _getTranslationHistoryListUseCase;
+  final GetCurrentUserIdUseCase _getCurrentUserIdUseCase;
 
   TranslationHistoryCubit({
     required GetTranslationHistoryListUseCase getTranslationHistoryListUseCase,
+    required GetCurrentUserIdUseCase getCurrentUserIdUseCase,
   })  : _getTranslationHistoryListUseCase = getTranslationHistoryListUseCase,
+        _getCurrentUserIdUseCase = getCurrentUserIdUseCase,
         super(
           const TranslationHistoryState(),
         ) {
@@ -22,10 +25,14 @@ class TranslationHistoryCubit extends Cubit<TranslationHistoryState> {
           status: TranslationHistoryStateStatus.loading,
         ),
       );
-      List<TranslationHistoryModel> translationHistories =
-          await _getTranslationHistoryListUseCase.execute(
+      final String userId = await _getCurrentUserIdUseCase.execute(
         const NoParams(),
       );
+
+      GetTranslationHistoryListPayload payload =
+          GetTranslationHistoryListPayload(userId: userId);
+      List<TranslationHistoryModel> translationHistories =
+          await _getTranslationHistoryListUseCase.execute(payload);
       emit(
         state.copyWith(
           status: TranslationHistoryStateStatus.success,

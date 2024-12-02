@@ -44,6 +44,8 @@ class HomePage extends StatelessWidget {
                 appLocator<GetTranslatedPhraseUseCase>(),
             addTranslationToHistoryUseCase:
                 appLocator<AddTranslationToHistoryUseCase>(),
+            getCurrentUserIdUseCase:
+                appLocator<GetCurrentUserIdUseCase>(),
           ),
         ),
       ],

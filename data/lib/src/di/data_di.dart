@@ -9,14 +9,12 @@ import 'package:domain/domain.dart';
 import '../errors/error_handler.dart';
 import '../providers/api_provider.dart';
 import '../providers/auth_provider_impl.dart';
-import '../providers/shared_preferences_provider.dart';
 
 abstract class DataDI {
   static void initDependencies(GetIt locator) {
     _initApi(locator);
     _initProviders(locator);
     _initRepositories(locator);
-    _initSharedPreferences(locator);
   }
 
   static void _initApi(GetIt locator) {
@@ -50,14 +48,6 @@ abstract class DataDI {
 
     locator.registerFactory<TranslationHistoryProviderImpl>(
       TranslationHistoryProviderImpl.new,
-    );
-  }
-
-  static Future<void> _initSharedPreferences(GetIt locator) async {
-    final SharedPreferencesProvider sharedPreferencesProvider =
-        await SharedPreferencesProvider.init();
-    locator.registerLazySingleton<SharedPreferencesProvider>(
-      () => sharedPreferencesProvider,
     );
   }
 

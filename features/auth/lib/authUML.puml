@@ -1,0 +1,121 @@
+@startuml
+class AuthModule {
+---
+}
+$AuthModule <|-- AuthModule
+abstract class $AuthModule {
+---
+pagesMap: Map<String, _i4.PageFactory>
+}
+AutoRouterModule <|-- $AuthModule
+class SignInRoute {
+---
+name: String
+page: _i4.PageInfo<void>
+}
+PageRouteInfo <|-- SignInRoute
+SignInRoute ..> _i4.PageInfo
+class SignUpRoute {
+---
+name: String
+page: _i4.PageInfo<void>
+}
+PageRouteInfo <|-- SignUpRoute
+SignUpRoute ..> _i4.PageInfo
+class SplashRoute {
+---
+name: String
+page: _i4.PageInfo<void>
+}
+PageRouteInfo <|-- SplashRoute
+SplashRoute ..> _i4.PageInfo
+class AuthBloc {
+---
+-signInUseCase: SignInUseCase
+-signUpUseCase: SignUpUseCase
+-_onSignInRequested(): void
+-_onSignUpRequested(): void
+}
+Bloc <|-- AuthBloc
+AuthBloc ..> SignInUseCase
+AuthBloc ..> SignUpUseCase
+abstract class AuthEvent {
+---
+props(): Object?[0..*]
+}
+class SignInRequestedEvent {
+---
+email: String
+password: String
+props(): Object?[0..*]
+}
+AuthEvent <|-- SignInRequestedEvent
+class SignUpRequestedEvent {
+---
+email: String
+password: String
+props(): Object?[0..*]
+}
+AuthEvent <|-- SignUpRequestedEvent
+class AuthState {
+---
+status: AuthStatus
+errorText: String
+copyWith(): AuthState
+}
+AuthState ..> AuthStatus
+class SplashBloc {
+---
+-getLoggedInUserUseCase: GetLoggedInUserUseCase
+-_onAuthCheckRequested(): void
+}
+Bloc <|-- SplashBloc
+SplashBloc ..> GetLoggedInUserUseCase
+abstract class SplashEvent {
+---
+}
+class SplashRequest {
+---
+}
+SplashEvent <|-- SplashRequest
+class SplashState {
+---
+status: SplashStatus
+userId: String?
+copyWith(): SplashState
+}
+SplashState ..> SplashStatus
+class SignInPage {
+---
+createState(): State<SignInPage
+}
+StatefulWidget <|-- SignInPage
+class _SignInPageState {
+---
+emailController: TextEditingController
+passwordController: TextEditingController
+initState(): void
+build(): Widget
+}
+State <|-- _SignInPageState
+_SignInPageState ..> TextEditingController
+class SignUpPage {
+---
+createState(): State<SignUpPage
+}
+StatefulWidget <|-- SignUpPage
+class _SignUpPageState {
+---
+emailController: TextEditingController
+passwordController: TextEditingController
+initState(): void
+build(): Widget
+}
+State <|-- _SignUpPageState
+_SignUpPageState ..> TextEditingController
+class SplashPage {
+---
+build(): Widget
+}
+StatelessWidget <|-- SplashPage
+@enduml

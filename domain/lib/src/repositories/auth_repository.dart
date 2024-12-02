@@ -9,4 +9,5 @@ abstract class AuthRepository {
 
   Future<String?> getLoggedInUser();
 
+  Future<String> getCurrentUserId();
 }

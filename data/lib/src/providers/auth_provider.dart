@@ -8,4 +8,6 @@ abstract class AuthenticationProvider {
   Future<void> logout();
 
   Future<String?> getCurrentUserToken();
+
+  Future<String> getCurrentUserId();
 }

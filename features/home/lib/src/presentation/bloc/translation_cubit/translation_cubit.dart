@@ -6,12 +6,15 @@ part 'translation_state.dart';
 class TranslationCubit extends Cubit<TranslationState> {
   final GetTranslatedPhraseUseCase _getTranslatedPhraseUseCase;
   final AddTranslationToHistoryUseCase _addTranslationToHistoryUseCase;
+  final GetCurrentUserIdUseCase _getCurrentUserIdUseCase;
 
   TranslationCubit({
     required GetTranslatedPhraseUseCase getTranslatedPhraseUseCase,
     required AddTranslationToHistoryUseCase addTranslationToHistoryUseCase,
+    required GetCurrentUserIdUseCase getCurrentUserIdUseCase,
   })  : _getTranslatedPhraseUseCase = getTranslatedPhraseUseCase,
         _addTranslationToHistoryUseCase = addTranslationToHistoryUseCase,
+        _getCurrentUserIdUseCase = getCurrentUserIdUseCase,
         super(
           const TranslationState(),
         );
@@ -23,16 +26,20 @@ class TranslationCubit extends Cubit<TranslationState> {
           status: TranslationStatus.loading,
         ),
       );
+      final String userId =  await _getCurrentUserIdUseCase.execute(const NoParams(),);
 
       GetTranslatedPhrasePayload payload = GetTranslatedPhrasePayload(
         inputPhrase: inputPhrase,
+        userId: userId,
       );
-      String translatedPhrase =
+
+      final String translatedPhrase =
           await _getTranslatedPhraseUseCase.execute(payload);
       TranslationHistoryModel translationHistoryModel = TranslationHistoryModel(
         inputPhrase: inputPhrase,
         translatedPhrase: translatedPhrase,
         createdAt: DateTime.now(),
+        userId: userId,
       );
       _addTranslationToHistoryUseCase.execute(translationHistoryModel);
       emit(

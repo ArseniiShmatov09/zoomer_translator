@@ -20,6 +20,7 @@ class TranslationHistoryPage extends StatelessWidget {
         create: (_) => TranslationHistoryCubit(
           getTranslationHistoryListUseCase:
               appLocator<GetTranslationHistoryListUseCase>(),
+          getCurrentUserIdUseCase: appLocator<GetCurrentUserIdUseCase>(),
         ),
         child: BlocBuilder<TranslationHistoryCubit, TranslationHistoryState>(
           builder: (context, state) {
@@ -33,8 +34,13 @@ class TranslationHistoryPage extends StatelessWidget {
               case TranslationHistoryStateStatus.success:
                 if (state.translationHistories == null ||
                     state.translationHistories!.isEmpty) {
-                  return const Center(
-                    child: Text('No translation history available.'),
+                  return Center(
+                    child: Text(
+                      'No history yet:(',
+                      style: TextStyle(
+                        color: AppColors.of(context).black,
+                      ),
+                    ),
                   );
                 }
                 return ListView.builder(
@@ -45,7 +51,8 @@ class TranslationHistoryPage extends StatelessWidget {
                       title: Text(history.inputPhrase),
                       subtitle: Text(history.translatedPhrase),
                       trailing: Text(
-                        DateFormat('yyyy-MM-dd HH:mm').format(history.createdAt),
+                        DateFormat('yyyy-MM-dd HH:mm')
+                            .format(history.createdAt),
                         style: const TextStyle(fontSize: 12),
                       ),
                     );
@@ -72,7 +79,12 @@ class TranslationHistoryPage extends StatelessWidget {
                         onPressed: () => context
                             .read<TranslationHistoryCubit>()
                             .fetchHistory(),
-                        child: const Text('Retry'),
+                        child: Text(
+                          'Retry',
+                          style: TextStyle(
+                            color: AppColors.of(context).black,
+                          ),
+                        ),
                       ),
                     ],
                   ),

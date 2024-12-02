@@ -48,4 +48,13 @@ class AuthProviderImpl implements AuthenticationProvider {
       return '';
     }
   }
+
+  @override
+  Future<String> getCurrentUserId() async {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return FirebaseAuth.instance.currentUser!.uid;
+    } else {
+      return '';
+    }
+  }
 }

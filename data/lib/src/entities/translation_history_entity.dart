@@ -4,11 +4,13 @@ class TranslationHistoryEntity {
   final String inputPhrase;
   final String translatedPhrase;
   final Timestamp createdAt;
+  final String userId;
 
   TranslationHistoryEntity({
     required this.inputPhrase,
     required this.translatedPhrase,
     required this.createdAt,
+    required this.userId,
   });
 
   static TranslationHistoryEntity fromMap(Map<String, dynamic> map) {
@@ -16,6 +18,7 @@ class TranslationHistoryEntity {
       inputPhrase: map['inputPhrase'],
       translatedPhrase: map['translatedPhrase'],
       createdAt: map['createdAt'],
+      userId: map['userId'],
     );
   }
 
@@ -24,6 +27,7 @@ class TranslationHistoryEntity {
       'inputPhrase': inputPhrase,
       'translatedPhrase': translatedPhrase,
       'createdAt': createdAt,
+      'userId' : userId,
     };
   }
 }

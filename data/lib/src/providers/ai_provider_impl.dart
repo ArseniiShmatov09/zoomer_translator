@@ -1,32 +1,34 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:core/core.dart';
 import 'package:data/src/providers/ai_provider.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
 
-class AIProviderImpl implements AIProvider{
-
+class AIProviderImpl implements AIProvider {
   @override
   Future<String> getAIResponse(GetTranslatedPhrasePayload payload) async {
     try {
-     final Map<String, dynamic> requestBody = {
+      final Map<String, dynamic> requestBody = {
         'workerId': AppConstants.workerId,
         'variables': {'input': payload.inputPhrase},
         'workflow': "Main.flow",
       };
 
-      final response = await http.post(
-        Uri.parse(AppConstants.apiUrl),
-        headers: {
-          'Authorization': 'Bearer ${AppConstants.accessToken}',
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(requestBody),
-      );
+      HttpClient httpClient = HttpClient();
+      httpClient.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+
+      final request = await httpClient.postUrl(Uri.parse(AppConstants.apiUrl));
+      request.headers.set('Authorization', 'Bearer ${AppConstants.accessToken}');
+      request.headers.set('Content-Type', 'application/json');
+      request.add(utf8.encode(json.encode(requestBody)));
+
+      final response = await request.close();
 
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
+        final responseBody = await response.transform(utf8.decoder).join();
+        final responseData = json.decode(responseBody);
         return responseData['result'];
       } else {
         return 'Something went wrong...';
@@ -35,6 +37,4 @@ class AIProviderImpl implements AIProvider{
       return 'System Error: $e';
     }
   }
-
-
 }

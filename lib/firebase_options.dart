@@ -71,4 +71,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'zoomer-translato.firebasestorage.app',
     iosBundleId: 'zoomertranslator.app',
   );
+
 }

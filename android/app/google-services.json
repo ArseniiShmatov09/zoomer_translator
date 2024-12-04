@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "761752124176",
+    "project_id": "zoomer-translato",
+    "storage_bucket": "zoomer-translato.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761752124176:android:86215c6c682d4a16b74395",
+        "android_client_info": {
+          "package_name": "zoomertranslator.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBInXyJfWYU4k8qf18Lo8DgPhIGE1nEKOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

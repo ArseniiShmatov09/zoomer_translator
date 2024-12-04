@@ -38,7 +38,7 @@ class _SignInPageState extends State<SignInPage> {
           if (state.status == AuthStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Successfully signed in!'),
+                content: Text('Вы успешно зарегистрированы!'),
               ),
             );
             AutoRouter.of(context).replace(
@@ -67,7 +67,7 @@ class _SignInPageState extends State<SignInPage> {
             appBar: AppBar(
               backgroundColor: AppColors.of(context).black,
               title: Text(
-                'Sign In',
+                'Вход',
                 style: TextStyle(
                   color: AppColors.of(context).white,
                 ),
@@ -92,7 +92,7 @@ class _SignInPageState extends State<SignInPage> {
                   TextField(
                     controller: passwordController,
                     decoration: const InputDecoration(
-                      labelText: 'Password',
+                      labelText: 'Пароль',
                       border: OutlineInputBorder(),
                     ),
                     obscureText: true,
@@ -104,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
                           passwordController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Fill in the empty fields'),
+                            content: Text('Поля не должны быть пустыми!'),
                           ),
                         );
                         return;
@@ -117,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
                           );
                     },
                     child: Text(
-                      'Sign In',
+                      'Вход',
                       style: TextStyle(
                         color: AppColors.of(context).black,
                       ),
@@ -130,7 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                       );
                     },
                     child: Text(
-                      'Sign Up',
+                      'Регистрация',
                       style: TextStyle(
                         color: AppColors.of(context).white,
                       ),

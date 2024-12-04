@@ -14,7 +14,7 @@ class TranslationHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Translation History'),
+        title: const Text('История переводов'),
       ),
       body: BlocProvider<TranslationHistoryCubit>(
         create: (_) => TranslationHistoryCubit(
